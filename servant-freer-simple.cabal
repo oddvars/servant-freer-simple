@@ -21,7 +21,6 @@ executable servant-freer-simple
   build-depends:       base >= 4.7 && < 5
                      , freer-simple
                      , mtl
-                     , natural-transformation
                      , servant
                      , servant-server
                      , text

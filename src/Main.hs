@@ -49,15 +49,15 @@ type API =
 api :: Proxy API
 api = Proxy
 
-effToHandler :: Effect :~> Handler
-effToHandler = NT (liftIO . runEffect)
-
 serverT :: ServerT API Effect
 serverT = upper
      :<|> lower
 
+-- enter gone from servant:
+--   -server = enter (NT nt) impl
+--   +server = hoistServer (Proxy :: Proxy MyApi) nt impl
 server :: Server API
-server = enter effToHandler serverT
+server = hoistServer api (liftIO . runEffect) serverT
 
 app :: Application
 app = serve api server
